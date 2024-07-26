@@ -1,0 +1,55 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australian to Dutch Flashcards</title>
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<h1>Australian to Dutch Flashcards</h1>
+<p>Enter an Australian saying and we'll translate it to Dutch.</p>
+<form id="translation-form">
+<div class="form-group">
+<label for="saying">Australian Saying</label>
+<input type="text" class="form-control" id="saying" name="saying" required>
+</div>
+<button type="submit" class="btn btn-primary">Translate</button>
+</form>
+<div id="translation-result"></div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+$('#translation-form').submit(function(e) {
+e.preventDefault();
+
+var saying = $('#saying').val();
+$.ajax({
+url: '/translate',
+method: 'POST',
+contentType: 'application/json',
+data: JSON.stringify({ saying: saying }),
+success: function(response) {
+$('#translation-result').html('<p>' + response.translation + '</p>');
+},
+error: function() {
+alert('Sorry, there was an error translating your saying.');
+}
+});
+});
+});
+</script>
+</body>
+</html>
+
